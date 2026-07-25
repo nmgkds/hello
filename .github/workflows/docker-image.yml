@@ -36,8 +36,8 @@ jobs:
       uses: aliyun/acr-login@v1
       with:
         region-id: cn-shanghai
-        username: ${{ secrets.ALI_AK_ID }}
-        password: ${{ secrets.ALI_AK_SECRET }}
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
 
     - name: Generate image meta
       id: meta
