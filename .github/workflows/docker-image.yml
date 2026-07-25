@@ -51,7 +51,9 @@ jobs:
           context: .
           push: true
           # 如果你的Dockerfile不在根目录，添加 file: ./app/Dockerfile
-          tags: ${{ env.IMAGE_FULL }}
+          tags: |
+            ${{ env.IMAGE_FULL }}
+            ${{ secrets.ALI_REGISTRY }}/${{ secrets.ALI_NAMESPACE }}/${{ secrets.ALI_REPOSITORY }}:latest
           # ACK集群一般amd64，若需要arm架构自行修改
           platforms: linux/amd64
           # cache-from: type=registry,reference=${{ env.IMAGE_FULL }}
