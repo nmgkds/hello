@@ -54,8 +54,8 @@ jobs:
           tags: ${{ env.IMAGE_FULL }}
           # ACK集群一般amd64，若需要arm架构自行修改
           platforms: linux/amd64
-          cache-from: type=registry,reference=${{ env.IMAGE_FULL }}
-          cache-to: type=registry,reference=${{ env.IMAGE_FULL }},mode=max
+          # cache-from: type=registry,reference=${{ env.IMAGE_FULL }}
+          # cache-to: type=registry,reference=${{ env.IMAGE_FULL }},mode=max
 
 
     # 7. 打印最终镜像地址，方便复制到ACK deployment
