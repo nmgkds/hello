@@ -33,11 +33,11 @@ jobs:
           sudo systemctl restart docker
 
     - name: Login to Aliyun ACR
-      uses: aliyun/acr-login@v1
-      with:
-        region-id: cn-shanghai
-        username: ${{ secrets.ACR_USERNAME }}
-        password: ${{ secrets.ACR_PASSWORD }}
+      run: |
+          docker login \
+          --username=${{ secrets.ACR_USERNAME }} \
+          crpi-vyt22uhlh2w61g5u.cn-shanghai.personal.cr.aliyuncs.com \
+          --password=${{ secrets.ACR_PASSWORD }}
 
     - name: Generate image meta
       id: meta
