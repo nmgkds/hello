@@ -28,7 +28,7 @@ jobs:
 
     - name: Set variables
       run: |
-        echo "The full SHA is ${{ github.sha }}"
+        echo "The full SHA is ${GITHUB_SHA:0:7}"
         echo "SHORT_SHA=${GITHUB_SHA:0:7}" >> $GITHUB_ENV
         echo "BRANCH=${{ github.ref_name }}" >> $GITHUB_ENV
         echo "IMAGE_TAG=${{ env.BRANCH }}-${{ env.SHORT_SHA }}" >> $GITHUB_ENV
