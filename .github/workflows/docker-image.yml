@@ -9,7 +9,7 @@ env:
   ACR_NAMESPACE: nmgkds
   IMAGE_REPO: myrepo
   # GitOps仓库信息
-  GITOPS_REPO: "your-org/gitops-ack-config"
+  GITOPS_REPO: "nmgkds/argoTest"
   GITOPS_APP_PATH: "apps/demo-service" # RepoB内应用yaml目录
 
 jobs:
@@ -23,8 +23,8 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@v4
 
-    # - name: Setup Docker Buildx
-    #   uses: docker/setup-buildx-action@v3
+    - name: Setup Docker Buildx
+      uses: docker/setup-buildx-action@v3
 
     - name: Set variables
       run: |
@@ -46,33 +46,19 @@ jobs:
         echo "BRANCH=$BRANCH" >> $GITHUB_ENV
         echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
         echo "FULL_IMAGE=$FULL_IMAGE" >> $GITHUB_ENV
-        # echo "full：${{ env.FULL_SHA }}"
-        echo "short：${{ env.SHORT_SHA }}"
-        echo "镜像地址：${{ env.FULL_IMAGE }}"
-
-    - name: Verify short SHA
-      run: |
-           echo "The short SHA is ${{ env.SHORT_SHA }}"
-           echo "The image tag is ${{ env.IMAGE_TAG }}"
-
-    # - name: Config Docker registry mirror
-    #   run: |
-    #       sudo tee /etc/docker/daemon.json <<-'EOF'
-    #       {
-    #         "registry-mirrors": [
-    #           "https://mirror.baidubce.com"
-    #         ]
-    #       }
-    #       EOF
-    #       sudo systemctl daemon-reload
-    #       sudo systemctl restart docker
 
     - name: Login to Aliyun ACR
-      run: |
-          docker login \
-          --username=${{ secrets.ACR_USERNAME }} \
-          crpi-vyt22uhlh2w61g5u.cn-shanghai.personal.cr.aliyuncs.com \
-          --password=${{ secrets.ACR_PASSWORD }}
+      uses: docker/login-action@v3
+      with:
+          registry: ${{ secrets.ALI_REGISTRY }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+     
+      # run: |
+      #     docker login \
+      #     --username=${{ secrets.ACR_USERNAME }} \
+      #     crpi-vyt22uhlh2w61g5u.cn-shanghai.personal.cr.aliyuncs.com \
+      #     --password=${{ secrets.ACR_PASSWORD }}
 
     - name: Generate image meta
       id: meta
