@@ -98,4 +98,30 @@ jobs:
           token: ${{ secrets.GITOPS_PAT }}
           path: gitops-repo # 克隆到子目录，不和源码冲突
 
+    - name: Install yq (yaml编辑工具)
+      run: |
+          wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/local/bin/yq
+          chmod +x /usr/local/bin/yq
+
+    - name: Update image in deployment.yaml
+      run: |
+          cd gitops-repo
+          # 修改deployment中容器镜像路径，根据你的yaml层级调整路径！
+          yq eval ".spec.template.spec.containers[0].image = \"${{ env.FULL_IMAGE }}\"" \
+            ${{ env.GITOPS_APP_PATH }}/deployment.yaml \
+            --inplace
+    - name: Commit & Push changes to GitOps Repo
+      run: |
+          cd gitops-repo
+          git config --global user.name "github-action-bot"
+          git config --global user.email "bot@github.com"
+          git add ${{ env.GITOPS_APP_PATH }}/deployment.yaml
+          # 判断是否有变更，无变更直接退出不提交
+          if git diff --cached --quiet; then
+            echo "No image changes, skip commit"
+          else
+            git commit -m "auto update image to ${{ env.FULL_IMAGE }}
+            commit source: ${{ github.sha }} repoA"
+            git push
+          fi
       
