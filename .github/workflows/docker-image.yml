@@ -57,7 +57,7 @@ jobs:
       #     docker login \
       #     --username=${{ secrets.ACR_USERNAME }} \
       #     crpi-vyt22uhlh2w61g5u.cn-shanghai.personal.cr.aliyuncs.com \
-      #     --password=${{ secrets.ACR_PASSWORD }}
+      #     --password=${{ secrets.ACR_PASSWORD }} 
 
     - name: Generate image meta
       id: meta
