@@ -72,7 +72,7 @@ jobs:
     #   with:
     #       context: .
     #       push: true
-    #       # 如果你的Dockerfile不在根目录，添加 file: ./app/Dockerfile
+    #       # 如果你的Dockerfile不在根目录 ，添加 file: ./app/Dockerfile
     #       tags: |
     #         ${{ env.IMAGE_FULL }}
     #         ${{ secrets.ALI_REGISTRY }}/${{ secrets.ALI_NAMESPACE }}/${{ secrets.ALI_REPOSITORY }}:latest
