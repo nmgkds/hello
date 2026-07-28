@@ -31,7 +31,7 @@ jobs:
         # 2. 使用 Shell 变量进行拼接
         IMAGE_TAG="${BRANCH}-${SHORT_SHA}"
         # 注意：如果 ACR_REGISTRY 等是仓库设置的 Secrets，这里需要换成 ${{ secrets.ACR_REGISTRY }}
-        FULL_IMAGE="${{ env.ACR_REGISTRY }}/${{ env.ACR_NAMESPACE }}/${{ env.IMAGE_REPO }}:${IMAGE_TAG}"
+        FULL_IMAGE="${{ secrets.ALI_REGISTRY }}/${{ secrets.ALI_NAMESPACE }}/${{ secrets.ALI_REPOSITORY }}:${IMAGE_TAG}"
         
         # 3. 打印验证（使用 Shell 变量）
         echo "The short SHA is: $SHORT_SHA"
