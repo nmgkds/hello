@@ -28,13 +28,11 @@ jobs:
 
     - name: Set variables
       run: |
-        FULL_SHA="${{ github.sha }}"
-        SHORT_SHA=$(echo "$FULL_SHA" | cut -c1-7)
-        echo "SHORT_SHA=${SHORT_SHA}" >> $GITHUB_ENV
+        echo "short_sha=${GITHUB_SHA:0:7}" >> $GITHUB_ENV
         echo "BRANCH=${{ github.ref_name }}" >> $GITHUB_ENV
         echo "IMAGE_TAG=${{ env.BRANCH }}-${{ env.SHORT_SHA }}" >> $GITHUB_ENV
         echo "FULL_IMAGE=${{ env.ACR_REGISTRY }}/${{ env.ACR_NAMESPACE }}/${{ env.IMAGE_REPO }}:${{ env.IMAGE_TAG }}" >> $GITHUB_ENV
-        echo "full：${{ env.FULL_SHA }}"
+        # echo "full：${{ env.FULL_SHA }}"
         echo "short：${{ env.SHORT_SHA }}"
         echo "镜像地址：${{ env.FULL_IMAGE }}"
 
