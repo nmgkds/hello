@@ -23,11 +23,12 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@v4
 
-    - name: Setup Docker Buildx
-      uses: docker/setup-buildx-action@v3
+    # - name: Setup Docker Buildx
+    #   uses: docker/setup-buildx-action@v3
 
     - name: Set variables
       run: |
+        echo "The full SHA is ${{ github.sha }}"
         echo "SHORT_SHA=${GITHUB_SHA:0:7}" >> $GITHUB_ENV
         echo "BRANCH=${{ github.ref_name }}" >> $GITHUB_ENV
         echo "IMAGE_TAG=${{ env.BRANCH }}-${{ env.SHORT_SHA }}" >> $GITHUB_ENV
