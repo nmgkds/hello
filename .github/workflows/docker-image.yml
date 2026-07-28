@@ -4,13 +4,9 @@ on:
   push:
     branches: [ "master" ]
 env:
-  # ACR信息
-  ACR_REGISTRY: crpi-vyt22uhlh2w61g5u.cn-shanghai.personal.cr.aliyuncs.com  
-  ACR_NAMESPACE: nmgkds
-  IMAGE_REPO: myrepo
   # GitOps仓库信息
   GITOPS_REPO: "nmgkds/argoTest"
-  GITOPS_APP_PATH: "apps/demo-service" # RepoB内应用yaml目录
+  GITOPS_APP_PATH: "k8s" # RepoB内应用yaml目录
 
 jobs:
 
@@ -94,5 +90,12 @@ jobs:
       run: |
           echo "✅ 镜像构建推送完成"
           echo "镜像地址：${{ env.FULL_IMAGE }}"
+
+    - name: Checkout GitOps RepoB
+      uses: actions/checkout@v4
+      with:
+          repository: ${{ env.GITOPS_REPO }}
+          token: ${{ secrets.GITOPS_PAT }}
+          path: gitops-repo # 克隆到子目录，不和源码冲突
 
       
